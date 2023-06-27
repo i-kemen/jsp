@@ -1,0 +1,56 @@
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import com.member.MemberDAO;
+import com.member.MemberDTO;
+
+@WebServlet("/JoinOk")
+public class JoinOk extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+
+        String id = request.getParameter("id");
+        String name = request.getParameter("name");
+        String password = request.getParameter("password");
+        String phone = request.getParameter("phone");
+        String email = request.getParameter("email");
+
+        // 회원 상태를 '승인 전'으로 설정
+        String memberStatus = "승인 전";
+        String memberRole = "일반사용자";
+
+        MemberDTO memberDTO = new MemberDTO(name, id, password, phone, email, memberStatus, memberRole);
+
+        try {
+            MemberDAO memberDAO = new MemberDAO();
+            memberDAO.addMember(memberDTO);
+
+            System.out.println("insert success");
+
+            // 가입 승인 수행
+            if (memberDTO.getMemberStatus().equals("승인 전")) {
+                memberDAO.approveMembership(memberDTO.getId());
+            }
+
+            // 세션에 회원 정보 저장
+            request.getSession().setAttribute("memberDTO", memberDTO);
+
+            // 회원 상태에 따라 페이지 리다이렉트 처리
+            if (memberDTO.getMemberStatus().equals("정상")) {
+                response.sendRedirect("joinResult.jsp");
+            } else if (memberDTO.getMemberStatus().equals("승인 전")) {
+                response.sendRedirect("joinResultApproval.jsp");
+            } else {
+                response.sendRedirect("join.html");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendRedirect("join.html");
+        }
+    }
+}

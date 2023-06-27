@@ -1,0 +1,12 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="jakarta.servlet.http.HttpSession" %>
+<%
+    // 현재 세션 가져오기
+    HttpSession session = request.getSession(false);
+    if (session != null) {
+        // 세션 제거
+        session.invalidate();
+    }
+    // 로그아웃 후 리다이렉트할 페이지로 이동
+    response.sendRedirect("logoutResult.jsp");
+%>

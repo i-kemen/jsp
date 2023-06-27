@@ -1,0 +1,37 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<%@ page import="com.test.member.memberBean" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Member Processing</title>
+</head>
+<body>
+  <body>
+    <%-- 회원 정보 입력 받기 --%>
+    <%
+    String id = request.getParameter("id");
+    String password = request.getParameter("password");
+    String name = request.getParameter("name");
+    String email = request.getParameter("email");
+    
+    memberBean member = new memberBean();
+    member.setId(id);
+    member.setPassword(password);
+    member.setName(name);
+    member.setEmail(email);
+    
+    // memberBean 객체를 request에 저장
+    request.setAttribute("member", member);
+    
+    // memberConfirm.jsp로 포워드
+    String forwardUrl = "memberConfirm.jsp";
+    request.getRequestDispatcher(forwardUrl).forward(request, response);
+    %>
+    
+    <%-- memberConfirm.jsp로의 이동을 위해 아래의 JavaScript 코드 추가 --%>
+    <script>
+        window.location.href = "memberConfirm.jsp";
+    </script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="com.member.MemberDTO" %>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Join Result</title>
+</head>
+<body>
+    <h1>Join Result - Approval Pending</h1>
+    
+    <%-- 세션에서 회원 정보 가져오기 --%>
+    <% MemberDTO memberDTO = (MemberDTO) session.getAttribute("memberDTO"); %>
+    
+    <%-- 회원 정보 표시 --%>
+    <p>ID: <%= memberDTO.getId() %></p>
+    <p>Name: <%= memberDTO.getName() %></p>
+    <p>Password: <%= memberDTO.getPassword() %></p>
+    <p>Phone: <%= memberDTO.getPhone() %></p>
+    
+    <p>Your membership registration is pending approval from the administrator.</p>
+    
+    <a href="index.html">Back to Home</a>
+</body>
+</html>

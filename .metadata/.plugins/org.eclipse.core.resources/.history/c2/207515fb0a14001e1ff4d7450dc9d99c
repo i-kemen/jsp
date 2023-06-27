@@ -1,0 +1,21 @@
+import com.member.MemberDAO;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+
+@WebServlet("/HandleJoinRequest")
+public class HandleJoinRequest extends HttpServlet {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String memberId = request.getParameter("id");
+        String action = request.getParameter("action");
+
+        MemberDAO memberDAO = new MemberDAO();
+
+        if (action.equals("approve")) {
+            memberDAO.approveMembership(memberId);
+        } else if (action.equals("reject")) {
+            memberDAO.deleteMember(memberId);
+        }
+
+        response.sendRedirect("joinRequests.jsp");
+    }
+}

@@ -1,0 +1,56 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="com.member.MemberDTO" %>
+<%@ page import="com.member.MemberDAO" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Modify</title>
+    <style>
+        <!-- 스타일 코드 생략 -->
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Admin Modify</h1>
+        <%-- 회원 정보 조회 --%>
+        <% MemberDTO memberDTO = null;
+           String memberId = request.getParameter("memberId");
+           if (memberId != null) {
+               try {
+                   MemberDAO memberDAO = new MemberDAO();
+                   memberDTO = memberDAO.getMemberById(memberId);
+               } catch (Exception e) {
+                   e.printStackTrace();
+               }
+           }
+        %>
+        <% if (memberDTO != null) { %>
+        <%-- 수정 폼 구성 --%>
+        <form action="AdminMemberUpdate" method="post" onsubmit="return validateForm()">
+            <input type="hidden" name="memberId" value="<%= memberDTO.getId() %>">
+            <label for="name">이름:</label>
+            <input type="text" id="name" name="name" value="<%= memberDTO.getName() %>" required><br>
+            <label for="email">이메일:</label>
+            <input type="email" id="email" name="email" value="<%= memberDTO.getEmail() %>" required><br>
+            <label for="memberStatus">회원상태:</label>
+            <select id="memberStatus" name="memberStatus">
+                <option value="active" <%= memberDTO.getMemberStatus().equals("active") ? "selected" : "" %>>Active</option>
+                <option value="inactive" <%= memberDTO.getMemberStatus().equals("inactive") ? "selected" : "" %>>Inactive</option>
+            </select><br>
+            <label for="memberRole">회원권한:</label>
+            <select id="memberRole" name="memberRole">
+                <option value="user" <%= memberDTO.getMemberRole().equals("user") ? "selected" : "" %>>User</option>
+                <option value="admin" <%= memberDTO.getMemberRole().equals("admin") ? "selected" : "" %>>Admin</option>
+            </select><br>
+            <button type="submit">수정</button>
+        </form>
+        <% } else { %>
+        <p>회원 정보를 찾을 수 없습니다.</p>
+        <% } %>
+    </div>
+    <script>
+        <!-- 유효성 검사 스크립트 생략 -->
+    </script>
+</body>
+</html>

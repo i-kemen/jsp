@@ -1,0 +1,66 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="com.member.MemberDTO" %>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Join Result - Approval Pending</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f1f1;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        p {
+            margin: 10px 0;
+        }
+
+        .container {
+            max-width: 400px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 20px;
+            margin: 0 auto;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background-color: #0069d9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Join Result - Approval Pending</h1>
+        
+        <%-- 세션에서 회원 정보 가져오기 --%>
+        <% MemberDTO memberDTO = (MemberDTO) session.getAttribute("memberDTO"); %>
+        
+        <%-- 회원 정보 표시 --%>
+        <p><strong>ID:</strong> <%= memberDTO.getId() %></p>
+        <p><strong>Name:</strong> <%= memberDTO.getName() %></p>
+        <p><strong>Password:</strong> <%= memberDTO.getPassword() %></p>
+        <p><strong>Phone:</strong> <%= memberDTO.getPhone() %></p>
+        <p><strong>Email:</strong> <%= memberDTO.getEmail() %></p>
+        
+        <p>Your membership registration is pending approval from the administrator.</p>
+        
+        <a href="index.html" class="btn">Back to Home</a>
+    </div>
+</body>
+</html>

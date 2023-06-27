@@ -1,0 +1,25 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+    Cookie[] cookies = request.getCookies();
+    if (cookies != null) {
+        for (Cookie cookie : cookies) {
+            if ("usernameCookie".equals(cookie.getName())) {
+                cookie.setMaxAge(0); // 쿠키의 수명을 0으로 설정하여 삭제
+                response.addCookie(cookie);
+                break;
+            }
+        }
+    }
+%>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Logout</title>
+</head>
+<body>
+    <h1>Logout</h1>
+    <p>You have been logged out.</p>
+    <p><a href="login.jsp">Login Again</a></p>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<%@ page import="com.test.member.memberBean" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Member Confirmation</title>
+</head>
+<body>
+    <%-- memberBean 객체 생성 및 회원 정보 가져오기 --%>
+    <% memberBean member = (memberBean) request.getAttribute("member"); %>
+
+    <%-- 회원 정보 출력 --%>
+    <h1>Member Information:</h1>
+    <p>ID: <%= member.getId() %></p>
+    <p>Password: <%= member.getPassword() %></p>
+    <p>Name: <%= member.getName() %></p>
+    <p>Email: <%= member.getEmail() %></p>
+</body>
+</html>

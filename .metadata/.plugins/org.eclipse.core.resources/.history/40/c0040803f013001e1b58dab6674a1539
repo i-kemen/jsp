@@ -1,0 +1,58 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="com.member.MemberDTO" %>
+<%@ page import="com.member.MemberDAO" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Join Requests</title>
+</head>
+<body>
+    <h1>Join Requests</h1>
+    
+    <%-- 로그인 체크 코드 --%>
+    <% String adminId = (String) session.getAttribute("adminId");
+    if (adminId == null) {
+        response.sendRedirect("adminLogin.html"); // 로그인 페이지로 이동
+    } %>
+    
+    <%-- 회원 가입 신청 목록 조회 --%>
+    <%
+    MemberDAO memberDAO = new MemberDAO();
+    ArrayList<MemberDTO> joinRequests = memberDAO.getJoinRequests();
+    %>
+    
+    <%-- 회원 가입 신청 목록 표시 --%>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Password</th>
+            <th>Phone</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+        <% for (MemberDTO memberDTO : joinRequests) { %>
+            <tr>
+                <td><%= memberDTO.getId() %></td>
+                <td><%= memberDTO.getName() %></td>
+                <td><%= memberDTO.getPassword() %></td>
+                <td><%= memberDTO.getPhone() %></td>
+                <td><%= memberDTO.getMemberStatus() %></td>
+                <td>
+                    <form method="post" action="ApproveJoinRequest">
+                        <input type="hidden" name="id" value="<%= memberDTO.getId() %>">
+                        <input type="submit" value="Approve">
+                    </form>
+                    <form method="post" action="RejectJoinRequest">
+                        <input type="hidden" name="id" value="<%= memberDTO.getId() %>">
+                        <input type="submit" value="Reject">
+                    </form>
+                </td>
+            </tr>
+        <% } %>
+    </table>
+    
+    <a href="adminDashboard.jsp">Back to Dashboard</a>
+</body>
+</html>

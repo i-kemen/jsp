@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+<body>
+    <!-- post 형식으로 while.jsp에 데이터 전달 -->    <form method="post" action="while.jsp">
+        반복할 문자열: <input type="text" name="msg" size="20"><br /> 
+        반복할 숫자: <input type="text" name="number" size="20" /> <br />
+        <input type="submit" value="보내기" />
+    </form>
+</body>
+</html>

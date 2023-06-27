@@ -1,0 +1,11 @@
+package com.member;
+
+import java.util.List;
+
+public interface MemberDAOInterface {
+    List<MemberDTO> getAllMembers();
+    MemberDTO getMemberById(String id);
+    boolean addMember(MemberDTO member);
+    boolean updateMember(MemberDTO member);
+    boolean deleteMember(String id);
+}

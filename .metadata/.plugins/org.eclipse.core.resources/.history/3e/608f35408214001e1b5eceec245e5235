@@ -1,0 +1,50 @@
+import java.io.IOException;
+import java.util.List;
+import com.member.MemberDAO;
+import com.member.MemberDTO;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+@WebServlet("/MemberManagementOKServlet")
+public class MemberManagementOKServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+    private MemberDAO memberDAO;
+
+    public void init() {
+        memberDAO = new MemberDAO();
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        doPost(request, response);
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String action = request.getParameter("action");
+
+        if (action.equals("search")) {
+            String searchKeyword = request.getParameter("searchKeyword");
+            List<MemberDTO> memberList = memberDAO.getAllMembers(); // 모든 회원 가져오기
+            if (searchKeyword != null && !searchKeyword.isEmpty()) {
+                memberList = filterMembersById(memberList, searchKeyword); // 회원 검색 필터링
+            }
+            request.setAttribute("memberList", memberList);
+            request.getRequestDispatcher("memberManagement.jsp").forward(request, response);
+        }
+    }
+
+    // 회원 아이디로 회원 필터링
+    private List<MemberDTO> filterMembersById(List<MemberDTO> members, String searchKeyword) {
+        List<MemberDTO> filteredMembers = new ArrayList<>();
+        for (MemberDTO member : members) {
+            if (member.getId().equals(searchKeyword)) {
+                filteredMembers.add(member);
+            }
+        }
+        return filteredMembers;
+    }
+}

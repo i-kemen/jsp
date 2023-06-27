@@ -1,0 +1,110 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Login Result</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .welcome-message {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .btn-modify {
+            display: block;
+            width: 200px;
+            margin: 0 auto;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-modify:hover {
+            background-color: #45a049;
+        }
+
+        .btn-withdraw {
+            display: block;
+            width: 200px;
+            margin: 0 auto;
+            padding: 10px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-withdraw:hover {
+            background-color: #d32f2f;
+        }
+
+        .btn-logout {
+            display: block;
+            width: 200px;
+            margin: 0 auto;
+            padding: 10px;
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-logout:hover {
+            background-color: #1976D2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Login Result</h1>
+        <p class="welcome-message">Welcome, <%= session.getAttribute("id") %>!</p>
+        <button class="btn-modify" onclick="goToModifyPage()">회원정보 수정</button>
+        <button class="btn-withdraw" onclick="goToWithdrawPage()">회원 탈퇴</button>
+        <form method="post" action="Logout">
+            <input class="btn-logout" type="submit" value="로그아웃">
+        </form>
+    </div>
+
+    <script>
+        function goToModifyPage() {
+            location.href = "modify.jsp";
+        }
+
+        function goToWithdrawPage() {
+            location.href = "withdraw.jsp";
+        }
+    </script>
+</body>
+</html>

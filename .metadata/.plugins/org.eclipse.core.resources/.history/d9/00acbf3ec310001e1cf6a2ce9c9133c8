@@ -1,0 +1,37 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<%@ page import="com.test.member.memberBean" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Member Processing</title>
+</head>
+<body>
+    <%-- 회원 정보 입력 받기 --%>
+    <%!
+    public void forwardToConfirmationPage(String id, String password, String name, String email, javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, java.io.IOException {
+        memberBean member = new memberBean();
+        member.setId(id);
+        member.setPassword(password);
+        member.setName(name);
+        member.setEmail(email);
+        
+        request.setAttribute("member", member);
+        
+        // memberConfirm.jsp로 포워드
+        String forwardUrl = "memberConfirm.jsp";
+        request.getRequestDispatcher(forwardUrl).forward(request, response);
+    }
+    %>
+
+    <%-- 회원 정보 가져오기 및 확인 페이지로 전달 --%>
+    <%
+    String id = request.getParameter("id");
+    String password = request.getParameter("password");
+    String name = request.getParameter("name");
+    String email = request.getParameter("email");
+
+    forwardToConfirmationPage(id, password, name, email, request, response);
+    %>
+</body>
+</html>

@@ -1,0 +1,71 @@
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+@WebServlet("/ServTest")
+public class ServTest extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
+    public ServTest() {
+        super();
+    }
+
+    @Override
+    public void init() throws ServletException {
+        System.out.println("Servlet initialized");
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html; charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        out.println("<!DOCTYPE html>");
+        out.println("<html>");
+        out.println("<head>");
+        out.println("<meta charset='UTF-8'>");
+        out.println("<title>Servlet Example</title>");
+        out.println("</head>");
+        out.println("<body>");
+        out.println("<h1>This is a GET request</h1>");
+        out.println("<form action='ServTest' method='get'>");
+        out.println("이름: <input type='text' name='name' size='10'><br/>");
+        out.println("<input type='submit' value='Submit'>");
+        out.println("</form>");
+        out.println("</body>");
+        out.println("</html>");
+        out.close();
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html; charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        out.println("<!DOCTYPE html>");
+        out.println("<html>");
+        out.println("<head>");
+        out.println("<meta charset='UTF-8'>");
+        out.println("<title>Servlet Example</title>");
+        out.println("</head>");
+        out.println("<body>");
+        out.println("<h1>This is a POST request</h1>");
+
+        // POST 요청에서 전달된 이름(name) 파라미터 값을 받아와서 출력합니다.
+        String name = request.getParameter("name");
+        out.println("입력한 이름: " + name);
+
+        out.println("</body>");
+        out.println("</html>");
+        out.close();
+    }
+
+    @Override
+    public void destroy() {
+        System.out.println("Servlet destroyed");
+    }
+    
+    public void contextDestroyed 
+}

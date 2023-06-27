@@ -1,0 +1,31 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+    <%
+        // 한글이 깨지지 않도록 처리
+        request.setCharacterEncoding("utf-8");
+    %>
+    <%
+        // name 값이 msg인 매개변수 데이터를 가져옴
+        String msg = request.getParameter("msg");
+    
+        // name 값이 number인 매개변수 데이터를 가져옴
+        int num = Integer.parseInt(request.getParameter("number"));
+        
+        // number 만큼 반복 출력
+        int i = 0;
+        while (i < num) {
+    %>
+    <b><%=msg%></b><br/>
+    <%
+        i++;
+        }
+    %>
+</body>
+</html>

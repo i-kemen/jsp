@@ -1,0 +1,9 @@
+package com.test.member;
+
+public class memberBean {
+    private String id;
+    private String password;
+    private String name;
+    
+    
+}

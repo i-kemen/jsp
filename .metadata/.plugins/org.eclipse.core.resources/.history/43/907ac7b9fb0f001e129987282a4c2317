@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+    <form method="post" action="login.jsp">
+        나이: <input type="text" name="number" size="20" /> <br />
+        <input type="submit" value="보내기" />
+        
+                <label for="id">ID:</label>
+        <input type="text" id="id" name="id" required><br/>
+        <label for="passwd">Password:</label>
+        <input type="password" id="passwd" name="passwd" required><br/>
+        <input type="submit" value="Login">
+    </form>
+</body>
+</html>

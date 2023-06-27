@@ -1,0 +1,37 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="com.member.MemberDTO" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>회원 가입 완료</title>
+</head>
+<body>
+    <h1>회원 가입 완료</h1>
+    <p>회원 가입이 완료되었습니다.</p>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Password</th>
+            <th>Phone</th>
+            <th>Status</th>
+        </tr>
+        <tr>
+            <% MemberDTO memberDTO = (MemberDTO) request.getSession().getAttribute("memberDTO"); %>
+            <td><%= memberDTO.getName() %></td>
+            <td><%= memberDTO.getId() %></td>
+            <td><%= memberDTO.getPassword() %></td>
+            <td><%= memberDTO.getPhone() %></td>
+            <td><%= memberDTO.getMemberStatus() %></td>
+        </tr>
+    </table>
+    <script>
+    function goToLoginPage() {
+        location.href = "login.html";
+    }
+    </script>
+
+    <button onclick="goToLoginPage()">Go to Login</button>
+</body>
+</html>

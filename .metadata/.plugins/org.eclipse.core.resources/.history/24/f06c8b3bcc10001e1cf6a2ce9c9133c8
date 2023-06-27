@@ -1,0 +1,69 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<%@ page import="java.sql.DriverManager, java.sql.SQLException, java.sql.Connection, java.sql.Statement, java.sql.ResultSet" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Database Connection and Query Result</title>
+</head>
+<body>
+<%
+    Connection conn = null;
+    Statement stmt = null;
+    ResultSet customerResultSet = null;
+    ResultSet empResultSet = null;
+
+    try {
+        String url = "jdbc:oracle:thin:@192.168.119.119:1521/dink05.dbsvr";
+        String user = "scott";
+        String password = "tiger";
+        conn = DriverManager.getConnection(url, user, password);
+        out.println("오라클 연결 성공<br>");
+
+        // CUSTOMER 테이블 조회
+        stmt = conn.createStatement();
+        customerResultSet = stmt.executeQuery("SELECT * FROM CUSTOMER");
+
+        // 결과 처리
+        out.println("<h1>Customer Information:</h1>");
+        out.println("<table border='1'>");
+        out.println("<tr><th>CUSTOMER_ID</th><th>CUSTOMER_NAME</th><th>CUSTOMER_ADDRESS</th></tr>");
+        while (customerResultSet.next()) {
+            int customerId = customerResultSet.getInt("CUSTOMER_ID");
+            String customerName = customerResultSet.getString("CUSTOMER_NAME");
+            String customerAddress = customerResultSet.getString("CUSTOMER_ADDRESS");
+
+            out.println("<tr><td>" + customerId + "</td><td>" + customerName + "</td><td>" + customerAddress + "</td></tr>");
+        }
+        out.println("</table>");
+
+    } catch (SQLException e) {
+        out.println("오라클 연결 실패<br>");
+    } finally {
+        // 리소스 해제
+        if (customerResultSet != null) {
+            try {
+                customerResultSet.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        if (stmt != null) {
+            try {
+                stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        if (conn != null) {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+%>
+</body>
+</html>

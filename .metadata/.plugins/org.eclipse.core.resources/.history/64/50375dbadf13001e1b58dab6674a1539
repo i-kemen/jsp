@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+    <form method="post" action="JoinOk">
+    
+    
+        <label for="id">ID:</label>
+        <input type="text" id="id" name="id" required><br/>
+        
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br/>
+       
+        
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br/>
+       
+        <label for="phone">Phone:</label>
+        <input type="text" id="phone" name="phone" required><br/>
+
+        <input type="submit" value="Join">
+        
+    </form>
+</body>
+</html>

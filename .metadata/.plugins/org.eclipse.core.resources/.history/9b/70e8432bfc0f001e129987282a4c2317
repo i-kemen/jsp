@@ -1,0 +1,30 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Login Result</title>
+</head>
+<body>
+    <%-- 로그인 정보 확인 --%>
+    <% 
+        String username = request.getParameter("id");
+        String password = request.getParameter("passwd");
+        
+        // 등록된 사용자명과 비밀번호
+        String registeredUsername = "김남훈";
+        String registeredPassword = "305305";
+        
+        boolean loginSuccessful = registeredUsername.equals(username) && registeredPassword.equals(password);
+    %>
+    
+    <%-- 로그인 결과에 따른 출력 --%>
+    <% if (loginSuccessful) { %>
+        <h1>Login Successful</h1>
+        <p>Welcome, <%= username %>!</p>
+    <% } else { %>
+        <h1>Login Failed</h1>
+        <p>Invalid username or password.</p>
+    <% } %>
+</body>
+</html>

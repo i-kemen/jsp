@@ -1,0 +1,26 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <h1>Welcome, Admin!</h1>
+    
+    <%-- 로그인 체크 코드 --%>
+    <% String adminId = (String) session.getAttribute("adminId");
+    if (adminId == null) {
+        response.sendRedirect("adminLogin.html"); // 로그인 페이지로 이동
+    } %>
+    
+    <%-- 관리자 페이지 내용 --%>
+    <p>This is the admin dashboard.</p>
+    <p>Here, you can manage and approve user registrations.</p>
+    
+    <%-- 관리자 로그아웃 버튼 --%>
+    <form method="post" action="AdminLogout">
+        <input type="submit" value="Logout">
+    </form>
+</body>
+</html>

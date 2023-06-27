@@ -1,0 +1,28 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<%@ page import="com.test.member.memberBean" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Member Processing</title>
+</head>
+<body>
+    <%-- 회원 정보 입력 받기 --%>
+    <%
+    String id = request.getParameter("id");
+    String password = request.getParameter("password");
+    String name = request.getParameter("name");
+    String email = request.getParameter("email");
+    %>
+
+    <%-- memberBean 객체 생성 및 회원 정보 설정 --%>
+    <jsp:useBean id="member" class="com.test.member.memberBean" scope="session" />
+    <jsp:setProperty name="member" property="id" value="<%= id %>" />
+    <jsp:setProperty name="member" property="password" value="<%= password %>" />
+    <jsp:setProperty name="member" property="name" value="<%= name %>" />
+    <jsp:setProperty name="member" property="email" value="<%= email %>" />
+
+
+
+</body>
+</html>

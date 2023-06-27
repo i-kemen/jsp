@@ -1,0 +1,52 @@
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+@WebServlet("/loginOk")
+public class LoginOk extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+
+        String id = request.getParameter("id");
+        String password = request.getParameter("password");
+
+        String query = "SELECT * FROM member WHERE id='" + id + "' AND password='" + password + "'";
+
+        try {
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@192.168.119.119:1521/dink", "scott", "tiger");
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+
+            if (rs.next()) {
+                // 로그인 성공
+                System.out.println("Login success");
+
+                // 로그인 정보를 세션에 저장
+                request.getSession().setAttribute("id", id);
+
+                response.sendRedirect("loginResult.jsp"); // 로그인 결과 페이지로 이동
+            } else {
+                // 로그인 실패
+                System.out.println("Login fail");
+                response.sendRedirect("loginFail.jsp"); // 로그인 실패 페이지로 이동
+            }
+
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendRedirect("login.html");
+        }
+    }
+}

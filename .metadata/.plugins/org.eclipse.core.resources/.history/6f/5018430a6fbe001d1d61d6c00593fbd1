@@ -1,0 +1,23 @@
+package com.nhk;
+
+import java.util.Scanner;
+
+public class Algorithm1 {
+
+    public static void main(String[] args) {
+        // 짝수, 홀수
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        int m = scanner.nextInt();
+        int cal = holJak(n, m);
+        // N, M이 홀짝 or 짝홀이면 두 수의 나머지 합이 1이므로
+        String answer = "" 
+        if (cal == 1) {
+        System.out.println("NO");
+    }
+
+    public static int holJak(int n, int m) {
+        int p = ((n + m) % 2);
+        return p;
+    }
+}

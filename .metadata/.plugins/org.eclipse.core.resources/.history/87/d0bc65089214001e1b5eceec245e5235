@@ -1,0 +1,33 @@
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import com.member.MemberDAO;
+import com.member.MemberDTO;
+
+@WebServlet("/AdminMemberModifyOk")
+public class AdminMemberModifyOkServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String memberId = request.getParameter("memberId");
+
+        try {
+            MemberDAO memberDAO = new MemberDAO();
+            MemberDTO memberDTO = memberDAO.getMemberById(memberId);
+
+            if (memberDTO != null) {
+                // 해당 회원의 정보를 request 속성에 설정하여 수정 페이지로 전달
+                request.setAttribute("memberDTO", memberDTO);
+                request.getRequestDispatcher("modifyMember.jsp").forward(request, response);
+            } else {
+                response.sendRedirect("memberManagement.jsp");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendRedirect("memberManagement.jsp");
+        }
+    }
+}

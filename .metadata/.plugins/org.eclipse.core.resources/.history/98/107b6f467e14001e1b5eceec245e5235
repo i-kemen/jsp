@@ -1,0 +1,54 @@
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.List;
+
+@WebServlet("/MemberManagementOKServlet")
+public class MemberManagementOKServlet extends HttpServlet {
+    private MemberDAO memberDAO;
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        memberDAO = new MemberDAO();
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String action = request.getParameter("action");
+        String memberId = request.getParameter("id");
+
+        if (action != null && memberId != null) {
+            switch (action) {
+                case "edit":
+                    MemberDTO member = memberDAO.getMemberById(memberId);
+                    request.setAttribute("editMember", member);
+                    break;
+                case "changeStatus":
+                    MemberDTO changeStatusMember = memberDAO.getMemberById(memberId);
+                    request.setAttribute("changeStatusMember", changeStatusMember);
+                    break;
+                case "changeRole":
+                    MemberDTO changeRoleMember = memberDAO.getMemberById(memberId);
+                    request.setAttribute("changeRoleMember", changeRoleMember);
+                    break;
+            }
+        }
+
+        List<MemberDTO> memberList = memberDAO.getAllMembers();
+        request.setAttribute("memberList", memberList);
+        request.getRequestDispatcher("memberManagement.jsp").forward(request, response);
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String action = request.getParameter("action");
+
+        if (action != null) {
+            switch (action) {
+                case "update":
+                    String memberId = request.getParameter("id");
+                    String name = request.getParameter("name");
+                    String password = request.getParameter("password");
+                    String phone = request.getParameter("phone");

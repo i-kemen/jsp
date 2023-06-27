@@ -1,0 +1,29 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>로그인 완료</title>
+</head>
+<body>
+    <h1>로그인 완료</h1>
+    <p>다음은 로그인 내역입니다:</p>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Password</th>
+            <th>Phone</th>
+        </tr>
+        <tr>
+            <td><%= request.getParameter("id") %></td>
+            <td><%= request.getParameter("name") %></td>
+            <td><%= request.getParameter("password") %></td>
+            <td><%= request.getParameter("phone") %></td>
+        </tr>
+    </table>
+
+    
+    
+</body>
+</html>

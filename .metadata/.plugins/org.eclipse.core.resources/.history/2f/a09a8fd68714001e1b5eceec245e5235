@@ -1,0 +1,74 @@
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import com.member.MemberDAO;
+import com.member.MemberDTO;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+@WebServlet("/MemberManagementOKServlet")
+public class MemberManagementOKServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+    private MemberDAO memberDAO;
+
+    public void init() {
+        memberDAO = new MemberDAO();
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        doPost(request, response);
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String action = request.getParameter("action");
+
+        if (action.equals("search")) {
+            String searchKeyword = request.getParameter("searchKeyword");
+            String searchBy = request.getParameter("searchBy");
+            List<MemberDTO> memberList = memberDAO.getAllMembers(); // 모든 회원 가져오기
+            if (searchKeyword != null && !searchKeyword.isEmpty()) {
+                memberList = filterMembers(memberList, searchKeyword, searchBy); // 회원 검색 필터링
+            }
+            request.setAttribute("memberList", memberList);
+            request.getRequestDispatcher("memberManagement.jsp").forward(request, response);
+        }
+    }
+
+    // 회원 필터링
+    private List<MemberDTO> filterMembers(List<MemberDTO> members, String searchKeyword, String searchBy) {
+        List<MemberDTO> filteredMembers = new ArrayList<>();
+        for (MemberDTO member : members) {
+            if (matchesSearchCriteria(member, searchKeyword, searchBy)) {
+                filteredMembers.add(member);
+            }
+        }
+        return filteredMembers;
+    }
+
+    // 회원 검색 조건에 맞는지 확인
+    private boolean matchesSearchCriteria(MemberDTO member, String searchKeyword, String searchBy) {
+        switch (searchBy) {
+            case "name":
+                return member.getName().contains(searchKeyword);
+            case "id":
+                return member.getId().contains(searchKeyword);
+            case "password":
+                return member.getPassword().contains(searchKeyword);
+            case "phone":
+                return member.getPhone().contains(searchKeyword);
+            case "email":
+                return member.getEmail().contains(searchKeyword);
+            case "status":
+                return member.getMemberStatus().contains(searchKeyword);
+            case "role":
+                return member.getMemberRole().contains(searchKeyword);
+            default:
+                return false;
+        }
+    }
+}

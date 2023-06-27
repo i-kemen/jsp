@@ -1,0 +1,74 @@
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+
+@WebServlet("/MemberManagementOKServlet")
+public class MemberManagementOKServlet extends HttpServlet {
+    private MemberDAO memberDAO;
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        memberDAO = new MemberDAO();
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String action = request.getParameter("action");
+        String memberId = request.getParameter("id");
+
+        if (action != null && memberId != null) {
+            switch (action) {
+                case "edit":
+                    MemberDTO member = memberDAO.getMemberById(memberId);
+                    request.setAttribute("editMember", member);
+                    break;
+                case "changeStatus":
+                    MemberDTO changeStatusMember = memberDAO.getMemberById(memberId);
+                    request.setAttribute("changeStatusMember", changeStatusMember);
+                    break;
+                case "changeRole":
+                    MemberDTO changeRoleMember = memberDAO.getMemberById(memberId);
+                    request.setAttribute("changeRoleMember", changeRoleMember);
+                    break;
+            }
+        }
+
+        List<MemberDTO> memberList = memberDAO.getAllMembers();
+        request.setAttribute("memberList", memberList);
+        request.getRequestDispatcher("memberManagement.jsp").forward(request, response);
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String action = request.getParameter("action");
+
+        if (action != null) {
+            switch (action) {
+                case "update":
+                    String memberId = request.getParameter("id");
+                    String name = request.getParameter("name");
+                    String password = request.getParameter("password");
+                    String phone = request.getParameter("phone");
+                    String email = request.getParameter("email");
+
+                    MemberDTO member = new MemberDTO(name, memberId, password, phone, email, null, null);
+                    memberDAO.updateMember(member);
+                    break;
+                case "changeStatus":
+                    String changeStatusId = request.getParameter("id");
+                    String status = request.getParameter("status");
+
+                    MemberDTO changeStatusMember = new MemberDTO(null, changeStatusId, null, null, null, status, null);
+                    memberDAO.updateMember(changeStatusMember);
+                    break;
+                case "changeRole":
+                    String changeRoleId = request.getParameter("id");
+                    String role = request.getParameter("role");
+
+                    MemberDTO changeRoleMember = new MemberDTO(null, changeRoleId, null, null, null, null, role);
+                    memberDAO.updateMember(changeRoleMember);
+                    break;
+            }
+        }
+
+        response.sendRedirect("MemberManagementOKServlet");
+    }
+}

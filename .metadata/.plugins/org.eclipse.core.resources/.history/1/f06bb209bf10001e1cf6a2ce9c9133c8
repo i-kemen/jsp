@@ -1,0 +1,24 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+    <%@ page import="com.test.member.memberBean" %>
+
+    <jsp:useBean id="member" class="com.test.member.memberBean" scope="page" />
+
+    <jsp:setProperty name="member" property="id" param="id" />
+    <jsp:setProperty name="member" property="password" param="password" />
+    <jsp:setProperty name="member" property="name" param="name" />
+    <jsp:setProperty name="member" property="email" param="email" />
+
+    <h1>Member Information:</h1>
+    <p>ID: <jsp:getProperty name="member" property="id" /></p>
+    <p>Password: <jsp:getProperty name="member" property="password" /></p>
+    <p>Name: <jsp:getProperty name="member" property="name" /></p>
+    <p>Email: <jsp:getProperty name="member" property="email" /></p>
+</body>
+</html>

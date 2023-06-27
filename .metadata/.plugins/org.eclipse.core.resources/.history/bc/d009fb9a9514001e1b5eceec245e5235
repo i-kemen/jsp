@@ -1,0 +1,111 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="com.member.MemberDTO" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Modify</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"],
+        input[type="email"] {
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Admin Modify</h1>
+        <%-- 세션에서 수정할 회원의 정보 가져오기 --%>
+        <% MemberDTO memberDTO = (MemberDTO) request.getAttribute("memberDTO"); %>
+        <% if (memberDTO != null) { %>
+        <%-- 수정 폼 구성 --%>
+        <form action="AdminMemberUpdate" method="post" onsubmit="return validateForm()">
+            <input type="hidden" name="memberId" value="<%= memberDTO.getId() %>">
+            <label for="name">이름:</label>
+            <input type="text" id="name" name="name" value="<%= memberDTO.getName() %>" required><br>
+            <label for="email">이메일:</label>
+            <input type="email" id="email" name="email" value="<%= memberDTO.getEmail() %>" required><br>
+            <label for="memberStatus">회원상태:</label>
+            <select id="memberStatus" name="memberStatus">
+                <option value="active" <%= memberDTO.getMemberStatus().equals("active") ? "selected" : "" %>>Active</option>
+                <option value="inactive" <%= memberDTO.getMemberStatus().equals("inactive") ? "selected" : "" %>>Inactive</option>
+            </select><br>
+            <label for="memberRole">회원권한:</label>
+            <select id="memberRole" name="memberRole">
+                <option value="user" <%= memberDTO.getMemberRole().equals("user") ? "selected" : "" %>>User</option>
+                <option value="admin" <%= memberDTO.getMemberRole().equals("admin") ? "selected" : "" %>>Admin</option>
+            </select><br>
+            <button type="submit">수정</button>
+        </form>
+        <% } else { %>
+        <p>회원 정보를 찾을 수 없습니다.</p>
+        <% } %>
+    </div>
+    <script>
+        function validateForm() {
+            const nameInput = document.getElementById('name');
+            const emailInput = document.getElementById('email');
+
+            const name = nameInput.value;
+            const email = emailInput.value;
+
+            if (name.trim().length === 0) {
+                alert('이름을 입력해주세요.');
+                return false;
+            }
+
+            if (email.trim().length === 0) {
+                alert('이메일을 입력해주세요.');
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+</body>
+</html>

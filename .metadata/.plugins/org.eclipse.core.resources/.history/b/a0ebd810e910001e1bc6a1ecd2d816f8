@@ -1,0 +1,35 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>회원 가입 완료</title>
+</head>
+<body>
+    <h1>회원 가입 완료</h1>
+    <p>다음은 가입된 내역입니다:</p>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Password</th>
+            <th>Phone</th>
+        </tr>
+        <tr>
+            <td><%= session.getAttribute("id") %></td>
+            <td><%= session.getAttribute("name") %></td>
+            <td><%= session.getAttribute("password") %></td>
+            <td><%= session.getAttribute("phone") %></td>
+        </tr>
+    </table>
+    <script>
+    function goToLoginPage() {
+        location.href = "login.html";
+    }
+</script>
+
+<button onclick="goToLoginPage()">Go to Login</button>
+    
+    
+</body>
+</html>

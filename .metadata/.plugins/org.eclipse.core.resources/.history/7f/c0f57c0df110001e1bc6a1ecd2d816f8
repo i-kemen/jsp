@@ -1,0 +1,49 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Modify</title>
+</head>
+<body>
+    <h1>회원 정보 수정</h1>
+    <%-- 세션에서 ID 값 가져오기 --%>
+    <% String id = (String) session.getAttribute("id"); %>
+    <%-- ID 값으로 회원 정보 조회 --%>
+    <% 
+        String query = "SELECT * FROM member WHERE id='" + id + "'";
+        try {
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@192.168.119.119:1521/dink", "scott", "tiger");
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            if (rs.next()) {
+                // 회원 정보 가져오기
+                String name = rs.getString("name");
+                String password = rs.getString("password");
+                String phone = rs.getString("phone");
+    %>
+    <%-- 수정 폼 구성 --%>
+    <form action="ModifyOk" method="post">
+        <label for="name">이름:</label>
+        <input type="text" id="name" name="name" value="<%= name %>" required><br>
+        <label for="id">아이디:</label>
+        <input type="text" id="id" name="id" value="<%= id %>" required readonly><br>
+        <label for="password">비밀번호:</label>
+        <input type="password" id="password" name="password" value="<%= password %>" required><br>
+        <label for="phone">전화번호:</label>
+        <input type="text" id="phone" name="phone" value="<%= phone %>" required><br>
+        <button type="submit">수정</button>
+    </form>
+    <% 
+            }
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendRedirect("modify.jsp");
+        }
+    %>
+</body>
+</html>

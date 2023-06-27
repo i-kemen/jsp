@@ -1,0 +1,201 @@
+package com.member;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+
+
+
+import java.sql.PreparedStatement;
+
+
+
+
+public class MemberDAO implements MemberDAOInterface {
+    private DataSource ds;
+
+    public MemberDAO() {
+        try {
+            Context ctx = new InitialContext();
+            ds = (DataSource) ctx.lookup("java:comp/env/jdbc/Oracle11g");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //전체 조회
+    @Override
+    public ArrayList<MemberDTO> getAllMembers() {
+        ArrayList<MemberDTO> dtos = new ArrayList<MemberDTO>();
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = ds.getConnection();
+            String query = "SELECT * FROM member";
+            pstmt = conn.prepareStatement(query);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                String name = rs.getString("name");
+ 
+                String password = rs.getString("password");
+                String phone = rs.getString("phone");
+
+                MemberDTO dto = new MemberDTO(name, id, password, phone);
+                dtos.add(dto);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null)
+                    rs.close();
+                if (pstmt != null)
+                    pstmt.close();
+                if (conn != null)
+                    conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return dtos;
+    }
+
+    
+    
+    //회원 단일 조회
+    @Override
+    public MemberDTO getMemberById(String id) {
+        MemberDTO member = null;
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = ds.getConnection();
+            String query = "SELECT * FROM member WHERE id = ?";
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, id);
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                String name = rs.getString("name");
+                String password = rs.getString("password");
+                String phone = rs.getString("phone");
+
+                member = new MemberDTO(name, id, password, phone);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null)
+                    rs.close();
+                if (pstmt != null)
+                    pstmt.close();
+                if (conn != null)
+                    conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return member;
+    }
+
+    
+    //멤버 추가 
+    @Override
+    public void addMember(MemberDTO member) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+
+        try {
+            conn = ds.getConnection();
+            String query = "INSERT INTO member(name, id, password, phone) VALUES (?, ?, ?, ?)";
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, member.getName());
+            pstmt.setString(2, member.getId());
+            pstmt.setString(3, member.getPassword());
+            pstmt.setString(4, member.getPhone());
+            pstmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (pstmt != null)
+                    pstmt.close();
+                if (conn != null)
+                    conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    //멤버 수정
+    @Override
+    public void updateMember(MemberDTO member) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+
+        try {
+            conn = ds.getConnection();
+            String query = "UPDATE member SET name=?, password=?, phone=? WHERE id=?";
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, member.getName());
+            pstmt.setString(2, member.getPassword());
+            pstmt.setString(3, member.getPhone());
+            pstmt.setString(4, member.getId());
+            pstmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (pstmt != null)
+                    pstmt.close();
+                if (conn != null)
+                    conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    //멤버 삭제
+    @Override
+    public void deleteMember(String id) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+
+        try {
+            conn = ds.getConnection();
+            String query = "DELETE FROM member WHERE id=?";
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, id);
+            pstmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (pstmt != null)
+                    pstmt.close();
+                if (conn != null)
+                    conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}

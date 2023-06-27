@@ -1,0 +1,35 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<%@ page import="com.test.member.memberBean" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Member Processing</title>
+</head>
+<body>
+    <%-- 회원 정보 입력 받기 --%>
+    <%
+    String id = request.getParameter("id");
+    String password = request.getParameter("password");
+    String name = request.getParameter("name");
+    String email = request.getParameter("email");
+    
+    memberBean member = new memberBean();
+    member.setId(id);
+    member.setPassword(password);
+    member.setName(name);
+    member.setEmail(email);
+    
+    request.setAttribute("member", member);
+    %>
+
+    <%-- 회원 정보 출력 및 확인 페이지로 이동 --%>
+    <h1>Member Information:</h1>
+    <p>ID: <%= member.getId() %></p>
+    <p>Password: <%= member.getPassword() %></p>
+    <p>Name: <%= member.getName() %></p>
+    <p>Email: <%= member.getEmail() %></p>
+    
+    <a href="memberConfirm.jsp">Confirm</a>
+</body>
+</html>

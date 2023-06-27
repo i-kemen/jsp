@@ -1,0 +1,14 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>forward jsp</title>
+</head>
+<body>
+    <jsp:forward page="forward_param.jsp">
+        <jsp:param value="test" name="id"/>
+        <jsp:param value="1234" name="passwd"/>
+    </jsp:forward>
+</body>
+</html>

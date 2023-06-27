@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+function validateForm() {
+  var password = document.getElementById("password").value;
+  var phone = document.getElementById("phone").value;
+  var passwordPattern = /^(?=.*[a-zA-Z])(?=.*[0-9]).{4,}$/;
+  var phonePattern = /^010-\d{4}-\d{4}$/;
+  
+  if (!passwordPattern.test(password)) {
+    document.getElementById("passwordMessage").innerHTML = "비밀번호는 영문과 숫자를 혼합하여 최소 4글자 이상으로 입력해주세요.";
+    return false;
+  }
+  else {
+    document.getElementById("passwordMessage").innerHTML = "";
+  }
+  
+  if (!phonePattern.test(phone)) {
+    document.getElementById("phoneMessage").innerHTML = "전화번호를 010-0000-0000 형식으로 입력해주세요.";
+    return false;
+  }
+  else {
+    document.getElementById("phoneMessage").innerHTML = "";
+  }
+  
+  return true;
+}
+
+window.onload = function() {
+  document.getElementById("password").value = "Password1234";
+  document.getElementById("phone").value = "010-1234-5678";
+}
+</script>
+</head>
+<body>
+    <form method="post" action="JoinOk" onsubmit="return validateForm()">
+        <label for="id">ID:</label>
+        <input type="text" id="id" name="id" required><br/>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br/>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br/>
+        <span id="passwordMessage" style="color: red;"></span>
+        <small>(비밀번호는 영문과 숫자를 혼합하여 최소 4글자 이상으로 입력해주세요.)</small><br/>
+        <label for="phone">Phone:</label>
+        <input type="text" id="phone" name="phone" required><br/>
+        <span id="phoneMessage" style="color: red;"></span>
+        <small>(전화번호를 010-0000-0000 형식으로 입력해주세요.)</small><br/>
+        <input type="submit" value="Join">
+    </form>
+</body>
+</html>

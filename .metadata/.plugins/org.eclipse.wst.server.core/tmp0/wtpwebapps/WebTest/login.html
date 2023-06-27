@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: zArial, sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            margin: 0 auto;
+            width: 300px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const error = urlParams.get('error');
+
+            if (error === 'invalid_password') {
+                alert('비밀번호를 다시 입력해주세요');
+            } else if (error === 'invalid_id') {
+                alert('회원 정보가 없습니다.');
+            } else if (error === 'invalid_status') {
+                alert('가입 승인이 안 되었습니다. 관리자에게 연락하세요.');
+            } else if (error === 'unknown_error') {
+                alert('알 수 없는 오류가 발생했습니다.');
+            }
+        });
+    </script>
+    
+</head>
+<body>
+    <h1>Login</h1>
+    <form method="post" action="LoginOk">
+        <label for="id">ID:</label>
+        <input type="text" id="id" name="id" required><br/>
+        
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br/>
+       
+        <input type="submit" value="Login">
+    </form>
+</body>
+</html>

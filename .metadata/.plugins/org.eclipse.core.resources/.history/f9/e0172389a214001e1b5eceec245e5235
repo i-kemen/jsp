@@ -1,0 +1,27 @@
+import com.member.MemberDAO;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+public class HandleWithdrawalRequest extends HttpServlet {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String id = request.getParameter("id");
+        String action = request.getParameter("action");
+
+        MemberDAO memberDAO = new MemberDAO();
+
+        if ("approve".equals(action)) {
+            // 회원 탈퇴 승인 처리
+            memberDAO.approveMembership(id);
+            memberDAO.deleteMember(id);
+        } else if ("reject".equals(action)) {
+            // 회원 탈퇴 거절 처리
+            memberDAO.updateMemberStatus(id, "정상");
+        }
+
+        response.sendRedirect("withdrawalRequests.jsp");
+    }
+}

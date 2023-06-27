@@ -1,0 +1,11 @@
+MemberDTO getMemberById(String id);
+
+void addMember(MemberDTO member);
+
+void updateMember(MemberDTO member);
+
+void deleteMember(String id);
+
+void approveMembership(String id);
+
+List<MemberDTO> getJoinRequests();

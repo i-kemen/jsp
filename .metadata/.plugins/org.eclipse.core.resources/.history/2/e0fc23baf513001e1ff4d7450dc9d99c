@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Login</title>
+</head>
+<body>
+    <h1>Admin Login</h1>
+    <form method="post" action="AdminLoginOk">
+        <label for="adminId">Admin ID:</label>
+        <input type="text" id="adminId" name="adminId" required><br/>
+        
+        <label for="adminPassword">Password:</label>
+        <input type="password" id="adminPassword" name="adminPassword" required><br/>
+        
+        <input type="submit" value="Login">
+    </form>
+</body>
+</html>

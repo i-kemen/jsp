@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        form {
+            max-width: 300px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Login</h1>
+    <form method="post" action="LoginOk">
+        <label for="id">ID:</label>
+        <input type="text" id="id" name="id" required><br/>
+        
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br/>
+
+        <input type="submit" value="Login">
+    </form>
+    
+    <%-- 로그인 후 승인 상태에 따라 리다이렉트 --%>
+    <% String memberStatus = (String) request.getSession().getAttribute("memberStatus");
+    if (memberStatus != null && memberStatus.equals("승인 전")) {
+        response.sendRedirect("joinResultApproval.jsp");
+    } else {
+        response.sendRedirect("LoginOk");
+    } %>
+</body>
+</html>

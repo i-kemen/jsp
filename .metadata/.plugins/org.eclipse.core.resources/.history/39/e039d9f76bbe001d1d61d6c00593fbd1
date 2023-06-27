@@ -1,0 +1,31 @@
+package com.nhk;
+
+import java.util.Scanner;
+
+public class Algorithm2 {
+
+    public static void main(String[] args) {
+        // M을 초항으로, N을 공차로 하는 등차수열 만들기
+        Scanner scanner = new Scanner(System.in);
+        int M = scanner.nextInt();
+        int N = scanner.nextInt();
+        int answer[] = new int[10];
+
+
+        for (int i = 0; i < 10; i++) {
+            if (i < 9) {
+                answer[i] = (M + N * i);
+
+            } else {
+                answer[i] = (M + N * i);
+            }
+        }
+        for (int i = 0; i < 10; i++) {
+            if (i < 9) {
+                System.out.print(answer[i] + " ");
+            } else {
+                System.out.print(answer[i] + "");
+            }
+        }
+    }
+}

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+<body>
+    <form method="post" action="age.jsp">
+      나이: <input type="text" name="number" size="20" /> <br />
+        <input type="submit" value="보내기" />
+    </form>
+</body>
+</html>

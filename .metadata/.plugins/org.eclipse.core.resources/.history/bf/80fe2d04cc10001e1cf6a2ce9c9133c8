@@ -1,0 +1,53 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<%@ page import="java.sql.DriverManager, java.sql.SQLException, java.sql.Connection, java.sql.Statement, java.sql.ResultSet" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Database Connection and Query Result</title>
+</head>
+<body>
+<%
+    String driver = "oracle.jdbc.driver.OracleDriver";
+    String url = "jdbc:oracle:thin:@192.168.119.119:1521/dink";
+    String user = "scott";
+    String password = "tiger";
+    try {
+        Class.forName(driver);
+        out.println("jdbc driver 로딩 성공<br>");
+        Connection conn = DriverManager.getConnection(url, user, password);
+        out.println("오라클 연결 성공<br>");
+
+        // Statement 객체 생성
+        Statement stmt = conn.createStatement();
+
+        // 쿼리 실행
+        String query = "SELECT * FROM EMP";
+        ResultSet rs = stmt.executeQuery(query);
+
+        // 결과 처리
+        out.println("<h1>Employee Information:</h1>");
+        out.println("<table border='1'>");
+        out.println("<tr><th>EMP_ID</th><th>EMP_NAME</th><th>EMP_DEPT</th></tr>");
+        while (rs.next()) {
+            int empId = rs.getInt("EMP_ID");
+            String empName = rs.getString("EMP_NAME");
+            String empDept = rs.getString("EMP_DEPT");
+
+            out.println("<tr><td>" + empId + "</td><td>" + empName + "</td><td>" + empDept + "</td></tr>");
+        }
+        out.println("</table>");
+
+        // 리소스 해제
+        rs.close();
+        stmt.close();
+        conn.close();
+    } catch (ClassNotFoundException e) {
+        out.println("jdbc driver 로딩 실패<br>");
+    } catch (SQLException e) {
+        out.println("오라클 연결 실패<br>");
+    }
+%>
+</body>
+</html>

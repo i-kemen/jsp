@@ -1,0 +1,31 @@
+import java.io.IOException;
+import java.util.List;
+
+import com.member.MemberDAO;
+import com.member.MemberDTO;
+
+@WebServlet("/MemberManagementOKServlet")
+public class MemberManagementOKServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+    private MemberDAO memberDAO;
+
+    public void init() {
+        memberDAO = new MemberDAO();
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String action = request.getParameter("action");
+
+        if (action.equals("search")) {
+            String searchKeyword = request.getParameter("searchKeyword");
+            List<MemberDTO> memberList = memberDAO.searchMembers(searchKeyword);
+            request.setAttribute("memberList", memberList);
+            request.getRequestDispatcher("memberManagement.jsp").forward(request, response);
+        } else if (action.equals("allMembers")) {
+            List<MemberDTO> memberList = memberDAO.getAllMembers();
+            request.setAttribute("memberList", memberList);
+            request.getRequestDispatcher("memberManagement.jsp").forward(request, response);
+        }
+    }
+}

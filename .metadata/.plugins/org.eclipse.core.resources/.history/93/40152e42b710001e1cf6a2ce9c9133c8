@@ -1,0 +1,14 @@
+<%@ page import="kr.co.jsplec.ex.Student" %>
+
+<jsp:useBean id="student" class="kr.co.jsplec.ex.Student" />
+
+<jsp:setProperty name="student" property="name" value="John Doe" />
+<jsp:setProperty name="student" property="age" value="20" />
+<jsp:setProperty name="student" property="grade" value="12" />
+<jsp:setProperty name="student" property="studentNum" value="12345" />
+
+<h1>Student Information:</h1>
+<p>Name: <jsp:getProperty name="student" property="name" /></p>
+<p>Age: <jsp:getProperty name="student" property="age" /></p>
+<p>Grade: <jsp:getProperty name="student" property="grade" /></p>
+<p>Student Number: <jsp:getProperty name="student" property="studentNum" /></p>

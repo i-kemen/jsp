@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Join Form</title>
+    <style>
+        /* 스타일 설정 */
+    </style>
+    <script>
+        function validateForm() {
+            // 유효성 검사 로직
+        }
+
+        function goToLoginPage() {
+            location.href = "login.html";
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>Join Form</h2>
+        <form method="post" action="JoinOk" onsubmit="return validateForm()">
+            <!-- 폼 내용 -->
+        </form>
+        <div class="form-group">
+            <button onclick="goToLoginPage()">Go to Login</button>
+        </div>
+    </div>
+</body>
+</html>

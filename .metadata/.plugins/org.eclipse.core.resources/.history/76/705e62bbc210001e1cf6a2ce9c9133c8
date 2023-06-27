@@ -1,0 +1,39 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<%@ page import="com.test.member.memberBean" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Member Processing</title>
+</head>
+<body>
+    <%-- 회원 정보 입력 받기 --%>
+    <%
+    String id = request.getParameter("id");
+    String password = request.getParameter("password");
+    String name = request.getParameter("name");
+    String email = request.getParameter("email");
+    
+    memberBean member = new memberBean();
+    member.setId(id);
+    member.setPassword(password);
+    member.setName(name);
+    member.setEmail(email);
+    
+    request.setAttribute("member", member);
+    %>
+
+    <%-- memberBean 객체 생성 및 회원 정보 설정 --%>
+    <jsp:useBean id="memberObj" class="com.test.member.memberBean" scope="session" />
+    <jsp:setProperty name="memberObj" property="id" value="<%= id %>" />
+    <jsp:setProperty name="memberObj" property="password" value="<%= password %>" />
+    <jsp:setProperty name="memberObj" property="name" value="<%= name %>" />
+    <jsp:setProperty name="memberObj" property="email" value="<%= email %>" />
+    
+    <%-- 이후에 memberConfirm.jsp로 리다이렉트 --%>
+    <%
+    String redirectUrl = "memberConfirm.jsp";
+    response.sendRedirect(redirectUrl);
+    %>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%
+    // 세션 무효화 (세션 제거)
+    session.invalidate();
+%>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Logout</title>
+</head>
+<body>
+    <h1>로그아웃 되었습니다.</h1>
+    <p>안전한 방법으로 웹 브라우저를 종료하시기 바랍니다.</p>
+</body>
+</html>

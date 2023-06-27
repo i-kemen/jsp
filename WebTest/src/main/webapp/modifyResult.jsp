@@ -1,0 +1,92 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Modify Result</title>
+    
+    <style>
+        /* CSS styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        p {
+            color: green;
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 14px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Modify Result</h1>
+    <!-- 수정된 회원 정보를 출력 -->
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>ID</th>
+            <th>Password</th>
+            <th>Phone</th>
+        </tr>
+        <tr>
+            <!-- 세션에서 수정된 회원 정보 가져오기 -->
+            <% String name = (String) session.getAttribute("name"); %>
+            <% String id = (String) session.getAttribute("id"); %>
+            <% String password = (String) session.getAttribute("password"); %>
+            <% String phone = (String) session.getAttribute("phone"); %>
+            <td><%= name %></td>
+            <td><%= id %></td>
+            <td><%= password %></td>
+            <td><%= phone %></td>
+        </tr>
+    </table>
+    <p>회원 정보가 성공적으로 수정되었습니다.</p>
+    
+    <script>
+        function goToModifyPage() {
+            location.href = "modify.jsp";
+        }
+    
+        function logout() {
+            location.href = "Logout";
+        }
+    </script>
+
+    <form method="post" action="Logout">
+        <button type="submit">로그아웃</button>
+    </form>
+    
+</body>
+</html>

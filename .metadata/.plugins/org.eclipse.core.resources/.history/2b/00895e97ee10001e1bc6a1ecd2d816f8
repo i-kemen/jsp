@@ -1,0 +1,36 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Modify Result</title>
+</head>
+<body>
+    <h1>Modify Result</h1>
+    <%-- 수정된 회원 정보를 출력 --%>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>ID</th>
+            <th>Password</th>
+            <th>Phone</th>
+        </tr>
+        <tr>
+            <td><%= session.getAttribute("name") %></td>
+            <td><%= session.getAttribute("id") %></td>
+            <td><%= session.getAttribute("password") %></td>
+            <td><%= session.getAttribute("phone") %></td>
+        </tr>
+    </table>
+    <p>회원 정보가 성공적으로 수정되었습니다.</p>
+    
+      <script>
+    function goToModifyPage() {
+        location.href = "modify.jsp";
+    }
+</script>
+
+<button onclick="goToModifyPage()">회원정보수정</button>
+    
+</body>
+</html>
